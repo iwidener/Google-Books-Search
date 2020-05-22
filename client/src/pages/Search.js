@@ -16,8 +16,7 @@ function Search() {
                 </Col>
             </Row>
         </Container>
-
     )
-}
+};
 
 export default Search;
