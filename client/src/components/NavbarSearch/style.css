@@ -1,0 +1,9 @@
+div.navbar-search {
+    margin-top: 5px;
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 130px;
+    width: 80%;
+    clear: both;
+    text-align: left;
+}
