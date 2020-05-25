@@ -1,0 +1,18 @@
+input.form-control {
+    margin-top: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 60px;
+    width: 80%;
+    clear: both;
+    text-align: left;
+}
+div.input-group.input-group-lg {
+    background-color: grey;
+    height: 100px;
+}
+
+button.btn.btn-success {
+    float: right;
+    margin-top: 20px;
+}

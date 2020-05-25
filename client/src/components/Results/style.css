@@ -1,0 +1,10 @@
+li.list-group-item {
+    margin-top: 20px;
+    padding-top: 50px;
+}
+
+div.listTitle {
+    font-size: 20px;
+    padding-top: 70px;
+    font-weight: bold;
+}

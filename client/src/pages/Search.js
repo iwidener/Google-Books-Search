@@ -1,12 +1,46 @@
-// import React, { useState,useEffect } from "react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Jumbotron from "../components/Jumbotron";
-import NavbarSearch from "../components/NavbarSearch";
+import { SearchBtn, TextArea } from "../components/Input";
+import { Results, ResultsItem } from "../components/Results";
+import API from "../utils/API";
+//import { Link } from "react-router-dom";
+import { SaveBtn, ViewBtn } from "../components/Buttons";
 import { Col, Row, Container } from "../components/Grid";
 
-// import { Link } from "react-router-dom";
+function Googlebooks() {
+    const [googlebooks, setGooglebooks] = useState([]);
+    const [formObject, setFormObject] = useState({})
 
-function Search() {
+    useEffect(() => {
+        loadGooglebooks()
+    }, [])
+
+    function loadGooglebooks() {
+        API.getGooglebooks()
+            .then(res =>
+                setGooglebooks(res.data)
+            )
+            .catch(err => console.log(err));
+    };
+
+    function handleInputChange(event) {
+        const { name, value } = event.target;
+        setFormObject({ ...formObject, [name]: value })
+    };
+
+    function handleFormSearch(event) {
+        event.preventDefault();
+        if (formObject.title && formObject.authors) {
+            API.saveGooglebook({
+                title: formObject.title,
+                authors: formObject.author,
+                description: formObject.description
+            })
+                .then(res => loadGooglebooks())
+                .catch(err => console.log(err));
+        }
+    };
+
     return (
         <Container fluid>
             <Row>
@@ -16,12 +50,43 @@ function Search() {
                         <h4>Search for and Save Books of Interest</h4>
                     </Jumbotron>
 
-                    <NavbarSearch/>
-                    
+                    <form>
+                        <h5>Book</h5>
+                        <TextArea
+                            onChange={handleInputChange}
+                            name="title"
+                            placeholder="Search for a Googlebook"
+                        >
+                        </TextArea>
+                        <SearchBtn
+                            onClick={handleFormSearch}
+                        >
+                            Search
+                        </SearchBtn>
+                    </form>
+                    {googlebooks.length ? (
+                        <Results>
+                            {googlebooks.map(googlebooks => (
+                                <ResultsItem key={googlebooks._id}>
+                                    {/* <Link to={"/googlebooks/" + googlebooks.id}> */}
+                                        {googlebooks.title} by {googlebooks.authors}
+                                        {googlebooks.description}
+                                    {/* </Link> */}
+
+                                    <SaveBtn onClick={() => { }}>Save</SaveBtn>
+
+                                    <ViewBtn onClick={() => { }}>View</ViewBtn>
+                                </ResultsItem>
+                            ))}
+                        </Results>
+                    ) : (
+                            <h3>No Results to Display</h3>
+                        )}
                 </Col>
             </Row>
-        </Container>
+
+        </Container >
     )
 };
 
-export default Search;
+export default Googlebooks;
