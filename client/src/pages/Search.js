@@ -6,10 +6,15 @@ import API from "../utils/API";
 //import { Link } from "react-router-dom";
 import { SaveBtn, ViewBtn } from "../components/Buttons";
 import { Col, Row, Container } from "../components/Grid";
+//import Thumbnail from "../components/Thumbnail";
+//import axios from "axios"
 
 function Googlebooks() {
+   
+    //const GOOGLE_BOOKS_API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
     const [googlebooks, setGooglebooks] = useState([]);
-    const [formObject, setFormObject] = useState({})
+    const [formObject, setFormObject] = useState([]);
+    // const [apiKey] = useState("")
 
     useEffect(() => {
         loadGooglebooks()
@@ -17,11 +22,21 @@ function Googlebooks() {
 
     function loadGooglebooks() {
         API.getGooglebooks()
-            .then(res =>
-                setGooglebooks(res.data)
-            )
+            .then(res => setGooglebooks(res.data))
             .catch(err => console.log(err));
     };
+
+    function saveGooglebook(bookData) {
+        API.saveGooglebook(bookData)
+            .then(res => loadGooglebooks())
+            .catch(err => console.log(err));
+    };
+
+    function viewGooglebook(url) {
+        API.viewGooglebook(url)
+            .then(res => loadGooglebooks())
+            .cath(err => console.log(err));
+    }
 
     function handleInputChange(event) {
         const { name, value } = event.target;
@@ -30,15 +45,37 @@ function Googlebooks() {
 
     function handleFormSearch(event) {
         event.preventDefault();
-        if (formObject.title && formObject.authors) {
-            API.saveGooglebook({
-                title: formObject.title,
-                authors: formObject.author,
-                description: formObject.description
-            })
-                .then(res => loadGooglebooks())
-                .catch(err => console.log(err));
-        }
+        // if (formObject.title && formObject.author) {
+        //     API.saveGooglebook({
+        //         image: formObject.image,
+        //         title: formObject.title,
+        //         author: formObject.author,
+        //         description: formObject.description
+        //     })
+        //         .then(res => loadGooglebooks())
+        //         .catch(err => console.log(err));
+        // }
+
+        // axios.get("https://www.googleapis.com/books/v1/volumes?q="+googlebooks+"&key="+apiKey+"&maxResults=10")
+        // .then(data => {
+        //     const formattedBooks = data.data.items.map(item => {
+        //         if(item.id && item.volumeInfo.title && item.volumeInfo.authors && item.volumeInfo.infoLink && item.volumeInfo.description && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail) {
+        //           const formattedItem = {
+        //               _id: item.id,
+        //               title: item.volumeInfo.title,
+        //               authors: item.volumeInfo.authors,
+        //               link: item.volumeInfo.infoLink,
+        //               description: item.volumeInfo.description,
+        //               image: item.volumeInfo.imageLinks.thumbnail
+        //           }  
+        //           return formattedItem;
+        //         }
+        //         return false;
+        //     }) 
+        //     console.log(formattedBooks);
+        //     setGooglebooks(formattedBooks);
+        //     console.log(data.data.items)
+        // })
     };
 
     return (
@@ -55,7 +92,7 @@ function Googlebooks() {
                         <TextArea
                             onChange={handleInputChange}
                             name="title"
-                            placeholder="Search for a Googlebook"
+                            placeholder="Title (required)"
                         >
                         </TextArea>
                         <SearchBtn
@@ -66,16 +103,24 @@ function Googlebooks() {
                     </form>
                     {googlebooks.length ? (
                         <Results>
-                            {googlebooks.map(googlebooks => (
-                                <ResultsItem key={googlebooks._id}>
-                                    {/* <Link to={"/googlebooks/" + googlebooks.id}> */}
-                                        {googlebooks.title} by {googlebooks.authors}
-                                        {googlebooks.description}
-                                    {/* </Link> */}
+                            {googlebooks.map(googlebook => (
+                                <ResultsItem key={googlebook._id}>
+                                    <Container>
+                                        <Row>
+                                            <Col size="xs-4 sm-2">
+                                                <img src={googlebook.image} alt={googlebook.title} />
+                                            </Col>
+                                            <Col size="xs-8 sm-9">
+                                                <h3>{googlebook.title}</h3>
+                                                <p>Written by {googlebook.authors}</p>
+                                                <p>{googlebook.description}</p>
+                                            </Col>
+                                        </Row>
+                                    </Container>
 
-                                    <SaveBtn onClick={() => { }}>Save</SaveBtn>
+                                    <SaveBtn onClick={() => saveGooglebook(googlebook)}>Save</SaveBtn>
 
-                                    <ViewBtn onClick={() => { }}>View</ViewBtn>
+                                    <ViewBtn onClick={() => viewGooglebook(googlebook.link)}>View</ViewBtn>
                                 </ResultsItem>
                             ))}
                         </Results>

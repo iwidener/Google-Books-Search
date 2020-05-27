@@ -2,8 +2,8 @@ import axios from "axios";
 
 export default {
   // Gets all posts
-  getGooglebooks: function (query) {
-    return axios.get("/api/googlebooks", { params: { q: query } });
+  getGooglebooks: function () {
+    return axios.get("/api/googlebooks");
   },
   // Gets the post with the given id
   getGooglebook: function (id) {
@@ -16,5 +16,9 @@ export default {
   //  Saves a post to the database
   saveGooglebook: function (googlebookData) {
     return axios.post("/api/googlebooks", googlebookData);
+  },
+
+  viewGooglebook: function () {
+    return axios.post("/api/googlebooks/")
   }
 };
