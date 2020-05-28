@@ -36,7 +36,7 @@ function Googlebooks() {
         API.viewGooglebook(url)
             .then(res => loadGooglebooks())
             .cath(err => console.log(err));
-    }
+    };
 
     function handleInputChange(event) {
         const { name, value } = event.target;
@@ -45,16 +45,22 @@ function Googlebooks() {
 
     function handleFormSearch(event) {
         event.preventDefault();
-        // if (formObject.title && formObject.author) {
-        //     API.saveGooglebook({
-        //         image: formObject.image,
-        //         title: formObject.title,
-        //         author: formObject.author,
-        //         description: formObject.description
-        //     })
-        //         .then(res => loadGooglebooks())
-        //         .catch(err => console.log(err));
-        // }
+       if (formObject.title && formObject.author) {
+            API.saveGooglebook({
+                image: formObject.image,
+                title: formObject.title,
+                author: formObject.author,
+                description: formObject.description
+            })
+            .then(() =>setFormObject({
+                image:"",
+                title: "",
+                author: "",
+                description: ""
+            }))
+                .then(res => loadGooglebooks())
+                .catch(err => console.log(err));
+        }
 
         // axios.get("https://www.googleapis.com/books/v1/volumes?q="+googlebooks+"&key="+apiKey+"&maxResults=10")
         // .then(data => {
@@ -117,9 +123,7 @@ function Googlebooks() {
                                             </Col>
                                         </Row>
                                     </Container>
-
-                                    <SaveBtn onClick={() => saveGooglebook(googlebook)}>Save</SaveBtn>
-
+                                    <SaveBtn onClick={() => saveGooglebook(googlebook._id)}>Save</SaveBtn>
                                     <ViewBtn onClick={() => viewGooglebook(googlebook.link)}>View</ViewBtn>
                                 </ResultsItem>
                             ))}
@@ -129,7 +133,6 @@ function Googlebooks() {
                         )}
                 </Col>
             </Row>
-
         </Container >
     )
 };

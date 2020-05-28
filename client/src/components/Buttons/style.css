@@ -6,3 +6,8 @@ button.view-btn.btn-info {
     float: right;
     margin-right: 10px;
 }
+
+button.delete-btn.btn-danger {
+    float: right;
+    margin-right: 10px;
+}

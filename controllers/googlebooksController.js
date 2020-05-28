@@ -22,7 +22,7 @@ module.exports = {
 
     create: function (req, res) {
         console.log(req.body);
-        req.body.authors = req.body.authors[0]
+        req.body.authors = req.body.authors
         db.Googlebook
         .create(req.body)
         .then(dbModel => res.json(dbModel)
