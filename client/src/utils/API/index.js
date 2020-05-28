@@ -20,5 +20,9 @@ export default {
 
   viewGooglebook: function () {
     return axios.post("/api/googlebooks/")
+  },
+  
+  searchGooglebook: function (title) {
+    return axios.get("/api/googlebooks/search?q=" + title);
   }
 };

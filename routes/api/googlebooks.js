@@ -7,13 +7,13 @@ router.route("/")
 .post(googlebooksController.create);
 
 router
+.route("/search")
+.get(BooksSearch);
+
+router
 .route("/:id")
 .get(googlebooksController.findById)
 .put(googlebooksController.update)
 .delete(googlebooksController.remove)
-
-// router
-// .route("/search")
-// .get(BooksSearch);
 
 module.exports = router;

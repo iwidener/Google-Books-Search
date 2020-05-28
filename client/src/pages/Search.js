@@ -3,18 +3,13 @@ import Jumbotron from "../components/Jumbotron";
 import { SearchBtn, TextArea } from "../components/Input";
 import { Results, ResultsItem } from "../components/Results";
 import API from "../utils/API";
-//import { Link } from "react-router-dom";
 import { SaveBtn, ViewBtn } from "../components/Buttons";
 import { Col, Row, Container } from "../components/Grid";
-//import Thumbnail from "../components/Thumbnail";
-//import axios from "axios"
 
 function Googlebooks() {
    
-    //const GOOGLE_BOOKS_API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
     const [googlebooks, setGooglebooks] = useState([]);
     const [formObject, setFormObject] = useState([]);
-    // const [apiKey] = useState("")
 
     useEffect(() => {
         loadGooglebooks()
@@ -34,7 +29,7 @@ function Googlebooks() {
 
     function viewGooglebook(url) {
         API.viewGooglebook(url)
-            .then(res => loadGooglebooks())
+            .then(res => loadGooglebooks(googlebooks.link))
             .cath(err => console.log(err));
     };
 
@@ -45,43 +40,9 @@ function Googlebooks() {
 
     function handleFormSearch(event) {
         event.preventDefault();
-       if (formObject.title && formObject.author) {
-            API.saveGooglebook({
-                image: formObject.image,
-                title: formObject.title,
-                author: formObject.author,
-                description: formObject.description
-            })
-            .then(() =>setFormObject({
-                image:"",
-                title: "",
-                author: "",
-                description: ""
-            }))
-                .then(res => loadGooglebooks())
-                .catch(err => console.log(err));
-        }
-
-        // axios.get("https://www.googleapis.com/books/v1/volumes?q="+googlebooks+"&key="+apiKey+"&maxResults=10")
-        // .then(data => {
-        //     const formattedBooks = data.data.items.map(item => {
-        //         if(item.id && item.volumeInfo.title && item.volumeInfo.authors && item.volumeInfo.infoLink && item.volumeInfo.description && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail) {
-        //           const formattedItem = {
-        //               _id: item.id,
-        //               title: item.volumeInfo.title,
-        //               authors: item.volumeInfo.authors,
-        //               link: item.volumeInfo.infoLink,
-        //               description: item.volumeInfo.description,
-        //               image: item.volumeInfo.imageLinks.thumbnail
-        //           }  
-        //           return formattedItem;
-        //         }
-        //         return false;
-        //     }) 
-        //     console.log(formattedBooks);
-        //     setGooglebooks(formattedBooks);
-        //     console.log(data.data.items)
-        // })
+        API.searchGooglebook(formObject.title)
+        .then(res => setGooglebooks(res.data))
+        .catch(err => console.log(err));
     };
 
     return (
@@ -124,7 +85,7 @@ function Googlebooks() {
                                         </Row>
                                     </Container>
                                     <SaveBtn onClick={() => saveGooglebook(googlebook._id)}>Save</SaveBtn>
-                                    <ViewBtn onClick={() => viewGooglebook(googlebook.link)}>View</ViewBtn>
+                                    <ViewBtn onClick={() => viewGooglebook(googlebooks.link)}>View</ViewBtn>
                                 </ResultsItem>
                             ))}
                         </Results>
