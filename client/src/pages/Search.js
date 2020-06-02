@@ -7,9 +7,9 @@ import { SaveBtn, ViewBtn } from "../components/Buttons";
 import { Col, Row, Container } from "../components/Grid";
 
 function Googlebooks() {
-   
+
     const [googlebooks, setGooglebooks] = useState([]);
-    const [formObject, setFormObject] = useState([]);
+    const [formObject, setFormObject] = useState("");
 
     useEffect(() => {
         loadGooglebooks()
@@ -21,16 +21,14 @@ function Googlebooks() {
             .catch(err => console.log(err));
     };
 
-    function saveGooglebook(bookData) {
-        API.saveGooglebook(bookData)
+    function saveGooglebook(googlebookData) {
+        API.saveGooglebook(googlebookData)
             .then(res => loadGooglebooks())
             .catch(err => console.log(err));
     };
 
     function viewGooglebook(url) {
-        API.viewGooglebook(url)
-            .then(res => loadGooglebooks(googlebooks.link))
-            .cath(err => console.log(err));
+        window.open(url, "_blank");
     };
 
     function handleInputChange(event) {
@@ -41,8 +39,8 @@ function Googlebooks() {
     function handleFormSearch(event) {
         event.preventDefault();
         API.searchGooglebook(formObject.title)
-        .then(res => setGooglebooks(res.data))
-        .catch(err => console.log(err));
+            .then(res => setGooglebooks(res.data))
+            .catch(err => console.log(err));
     };
 
     return (
@@ -84,8 +82,8 @@ function Googlebooks() {
                                             </Col>
                                         </Row>
                                     </Container>
-                                    <SaveBtn onClick={() => saveGooglebook(googlebook._id)}>Save</SaveBtn>
-                                    <ViewBtn onClick={() => viewGooglebook(googlebooks.link)}>View</ViewBtn>
+                                    <SaveBtn onClick={() => saveGooglebook(googlebook)}>Save</SaveBtn>
+                                    <ViewBtn onClick={() => viewGooglebook(googlebook.link)}>View</ViewBtn>
                                 </ResultsItem>
                             ))}
                         </Results>

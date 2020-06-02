@@ -4,12 +4,10 @@ import { Col, Row, Container } from "../components/Grid";
 import { Results, ResultsItem } from "../components/Results";
 import { DeleteBtn, ViewBtn } from "../components/Buttons";
 import API from "../utils/API";
-//import { Link } from "react-router-dom";
 
 function Saved() {
 
     const [googlebooks, setGooglebooks] = useState([]);
-   // const [formObject, setFormObject] = useState([]);
 
     useEffect(() => {
         loadGooglebooks()
@@ -22,9 +20,7 @@ function Saved() {
     };
 
     function viewGooglebook(url) {
-        API.viewGooglebook(url)
-            .then(res => loadGooglebooks())
-            .cath(err => console.log(err));
+        window.open(url, "_blank");
     };
 
     function deleteGooglebook(id) {
@@ -46,20 +42,18 @@ function Saved() {
                             {googlebooks.map(googlebook => {
                                 return (
                                     <ResultsItem key={googlebook._id}>
-                                        {/* <a href={"/saved/" + googlebook._id}> */}
-                                            <Container>
-                                                <Row>
-                                                    <Col size="xs-4 sm-2">
-                                                        <img src={googlebook.image} alt={googlebook.title} />
-                                                    </Col>
-                                                    <Col size="xs-8 sm-9">
-                                                        <h3>{googlebook.title}</h3>
-                                                        <p>Written by {googlebook.authors}</p>
-                                                        <p>{googlebook.description}</p>
-                                                    </Col>
-                                                </Row>
-                                            </Container>
-                                        {/* </a> */}
+                                        <Container>
+                                            <Row>
+                                                <Col size="xs-4 sm-2">
+                                                    <img src={googlebook.image} alt={googlebook.title} />
+                                                </Col>
+                                                <Col size="xs-8 sm-9">
+                                                    <h3>{googlebook.title}</h3>
+                                                    <p>Written by {googlebook.authors}</p>
+                                                    <p>{googlebook.description}</p>
+                                                </Col>
+                                            </Row>
+                                        </Container>
                                         <DeleteBtn onClick={() => deleteGooglebook(googlebook._id)}>Delete</DeleteBtn>
                                         <ViewBtn onClick={() => viewGooglebook(googlebook.link)}>View</ViewBtn>
                                     </ResultsItem>
