@@ -3,12 +3,11 @@ import "./style.css";
 
 export function Results({ children }) {
     return (
-        <div className="listTitle">Results
+        <div className="listTitle"><strong>Results</strong>
             <div className="list-overflow-container">
                 <ul className="list-group">{children}</ul>
             </div>
         </div>
-
     )
 };
 

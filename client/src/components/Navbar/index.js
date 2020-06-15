@@ -6,7 +6,7 @@ function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-secondary bg-secondary">
 
-            <Link className="navbar-brand" to="/">Google Books</Link>
+            {/* <Link className="navbar-brand" to="/">Google Books</Link> */}
 
             <div>
                 <ul className="navbar-nav">

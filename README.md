@@ -15,9 +15,13 @@
 * The saved books are stored on a Saved page.
 * The user will be given a choice to view or delete a book. 
 
-## Links
-https://google-books-search-star.herokuapp.com/
+## Deployment
+Heroku link: https://google-books-search-star.herokuapp.com/
 
+
+## Other Links
+
+### The pattern for app background is downloaded from http://www.subtlepatterns.com/
 
 
 

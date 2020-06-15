@@ -48,12 +48,12 @@ function Googlebooks() {
             <Row>
                 <Col size="md-12">
                     <Jumbotron>
-                        <h2>(React) Google Books Search</h2>
-                        <h4>Search for and Save Books of Interest</h4>
+                        <h2><strong>(React) Google Books Search</strong></h2>
+                        <h4><strong>Search for and Save Books of Interest</strong></h4>
                     </Jumbotron>
 
                     <form>
-                        <h5>Book</h5>
+                        <h5><strong>Book</strong></h5>
                         <TextArea
                             onChange={handleInputChange}
                             name="title"
