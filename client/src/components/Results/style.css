@@ -1,9 +1,17 @@
 li.list-group-item {
     margin-top: 20px;
     padding-top: 50px;
+    padding-left: 0px;
+    margin-left: 0px;
+    background-color: whitesmoke;
 }
 
 div.listTitle {
-    font-size: 20px;
     padding-top: 70px;
+}
+
+p {
+    width: auto;
+    font-size: 18px;
+    text-align: justify;
 }
